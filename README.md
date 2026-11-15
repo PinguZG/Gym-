@@ -43,3 +43,7 @@ Genaueres: `docs/INTEGRATIONS.md`.
 
 ## Status
 Siehe unten bzw. Abschlussbericht. Nicht getestet: `docker compose up` (Docker-Daemon in der Entwicklungsumgebung), echte Live-Adapter, Spracherkennung auf echtem Gerät.
+
+## Review-Stand (Opus-Review, Prototyp)
+Behoben: getrennte Env je Container, echte Client-IP hinter Caddy (`ADDRESS_HEADER`), Ingest-Token-Pflicht (≥32 Zeichen), Live-Sync nur für `HUB_OWNER_EMAIL`, Settings zeigt nur eigene Läufe.
+Offen (vor Mehrbenutzer/Produktion): Sidecar-Zugangsdaten pro Nutzer, Rate-Limit auch für Register + pro IP, zusammengesetzte FKs (`user_id` konsistent), Indizes auf `sessions`, CSP mit Nonce statt `unsafe-inline`, PR-Neuberechnung nach Sync, Zeitzone pro Nutzer.

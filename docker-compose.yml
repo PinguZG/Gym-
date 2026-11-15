@@ -1,11 +1,23 @@
+# Secrets kommen aus .env (nicht im Repo). Jeder Container sieht nur, was er braucht.
 services:
   app:
     build: .
     restart: unless-stopped
-    env_file: .env
     environment:
       DATABASE_URL: /data/hub.db
-      ORIGIN: ${ORIGIN:-https://localhost}
+      ORIGIN: https://${HUB_DOMAIN:-localhost}
+      ADDRESS_HEADER: X-Forwarded-For
+      XFF_DEPTH: "1"
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION:-false}
+      HUB_OWNER_EMAIL: ${HUB_OWNER_EMAIL:-}
+      INTEGRATION_APPLE: ${INTEGRATION_APPLE:-mock}
+      INTEGRATION_GARMIN: ${INTEGRATION_GARMIN:-mock}
+      INTEGRATION_YAZIO: ${INTEGRATION_YAZIO:-mock}
+      INTEGRATION_RENPHO: ${INTEGRATION_RENPHO:-mock}
+      APPLE_INGEST_TOKEN: ${APPLE_INGEST_TOKEN:-}
+      APPLE_INGEST_USER_EMAIL: ${APPLE_INGEST_USER_EMAIL:-}
+      SYNC_URL: http://sync:8000
+      SYNC_SHARED_SECRET: ${SYNC_SHARED_SECRET:-}
     volumes:
       - hub_data:/data
     expose: ["3000"]
@@ -14,7 +26,14 @@ services:
   sync:
     build: ./sync
     restart: unless-stopped
-    env_file: .env
+    environment:
+      SYNC_SHARED_SECRET: ${SYNC_SHARED_SECRET:-}
+      GARMIN_EMAIL: ${GARMIN_EMAIL:-}
+      GARMIN_PASSWORD: ${GARMIN_PASSWORD:-}
+      YAZIO_EMAIL: ${YAZIO_EMAIL:-}
+      YAZIO_PASSWORD: ${YAZIO_PASSWORD:-}
+      RENPHO_EMAIL: ${RENPHO_EMAIL:-}
+      RENPHO_PASSWORD: ${RENPHO_PASSWORD:-}
     volumes:
       - sync_data:/data
     expose: ["8000"]
