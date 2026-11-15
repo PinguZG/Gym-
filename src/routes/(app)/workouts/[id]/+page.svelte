@@ -20,9 +20,9 @@
   let error = $state('');
   let showNew = $state(false);
   let extraExercises = $state<{ id: string; name: string }[]>([]);
-  let suggestForm: HTMLFormElement;
+  let suggestForm = $state<HTMLFormElement>();
   let voiceText = $state('');
-  let voiceForm: HTMLFormElement;
+  let voiceForm = $state<HTMLFormElement>();
   let listening = $state(false);
 
   const allExercises = $derived([...data.exercises.map((e) => ({ id: e.id, name: e.name })), ...extraExercises.filter((x) => !data.exercises.some((e) => e.id === x.id))].sort((a, b) => a.name.localeCompare(b.name, 'de')));
@@ -40,7 +40,7 @@
 
   function onPick() {
     suggestion = null;
-    if (exerciseId) suggestForm.requestSubmit();
+    if (exerciseId) suggestForm?.requestSubmit();
   }
 
   function handle(result: any) {
@@ -56,7 +56,7 @@
     if (r.kind === 'set') {
       const prs: PR[] = r.newPRs ?? [];
       if (prs.length) toast = '🏆 Neuer PR: ' + prs.map((p) => `${p.exerciseName} ${n1(p.value)} kg`).join(', ');
-      if (exerciseId) suggestForm.requestSubmit();
+      if (exerciseId) suggestForm?.requestSubmit();
     }
     if (r.kind === 'voice') toast = `${r.added} ${r.added === 1 ? 'Satz' : 'Sätze'} per Sprache hinzugefügt`;
   }
@@ -78,7 +78,7 @@
     rec.interimResults = false;
     rec.maxAlternatives = 1;
     listening = true;
-    rec.onresult = (e: any) => { voiceText = e.results[0][0].transcript; setTimeout(() => voiceForm.requestSubmit(), 0); };
+    rec.onresult = (e: any) => { voiceText = e.results[0][0].transcript; setTimeout(() => voiceForm?.requestSubmit(), 0); };
     rec.onerror = (e: any) => { listening = false; error = e.error === 'not-allowed' ? 'Mikrofon-Zugriff verweigert.' : 'Spracherkennung fehlgeschlagen (' + e.error + ').'; };
     rec.onend = () => { listening = false; };
     try { rec.start(); } catch { listening = false; error = 'Spracherkennung konnte nicht gestartet werden.'; }
