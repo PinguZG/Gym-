@@ -1,0 +1,38 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: /data/hub.db
+      ORIGIN: ${ORIGIN:-https://localhost}
+    volumes:
+      - hub_data:/data
+    expose: ["3000"]
+    depends_on: [sync]
+
+  sync:
+    build: ./sync
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - sync_data:/data
+    expose: ["8000"]
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    environment:
+      HUB_DOMAIN: ${HUB_DOMAIN:-localhost}
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [app]
+
+volumes:
+  hub_data:
+  sync_data:
+  caddy_data:
+  caddy_config:

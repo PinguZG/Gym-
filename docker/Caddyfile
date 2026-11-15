@@ -1,0 +1,12 @@
+# HUB_DOMAIN=localhost -> lokales HTTPS (Caddy-interne CA); echte Domain -> Let's Encrypt automatisch
+{$HUB_DOMAIN:localhost} {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+	}
+	request_body {
+		max_size 5MB
+	}
+	reverse_proxy app:3000
+}
