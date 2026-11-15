@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #070907;
+  --color-card: #101410;
+  --color-card-2: #161b16;
+  --color-line: #232a23;
+  --color-neon: #39ff14;
+  --color-neon-dim: #2bc010;
+  --color-muted: #8a958a;
+  --color-danger: #ff4d4d;
+  --font-sans: 'Inter', 'Helvetica Neue', Arial, system-ui, sans-serif;
+}
+
+html, body { background: var(--color-bg); color: #f2f5f2; font-family: var(--font-sans); font-weight: 600; -webkit-tap-highlight-color: transparent; }
+body { padding-bottom: env(safe-area-inset-bottom); }
+
+.card { background: var(--color-card); border: 1px solid var(--color-line); border-radius: 1.5rem; padding: 1.1rem; box-shadow: 0 0 0 1px rgba(57,255,20,.02), 0 10px 30px -12px rgba(57,255,20,.08); }
+.glow { box-shadow: 0 0 18px -2px rgba(57,255,20,.45); }
+.btn { background: var(--color-neon); color: #041004; font-weight: 800; border-radius: 9999px; padding: .75rem 1.25rem; box-shadow: 0 0 20px -4px rgba(57,255,20,.6); }
+.btn:active { transform: scale(.97); }
+.btn-ghost { border: 1px solid var(--color-line); border-radius: 9999px; padding: .6rem 1rem; color: #cfd8cf; }
+.input { background: var(--color-card-2); border: 1px solid var(--color-line); border-radius: 1rem; padding: .75rem 1rem; width: 100%; color: inherit; font-weight: 600; }
+.input:focus { outline: none; border-color: var(--color-neon); box-shadow: 0 0 0 3px rgba(57,255,20,.15); }
+.label { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--color-muted); font-weight: 800; }
+.big { font-size: 2rem; font-weight: 900; line-height: 1; letter-spacing: -.02em; }

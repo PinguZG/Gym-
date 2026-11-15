@@ -1,0 +1,36 @@
+{
+  "name": "hub",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev --host",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "db:push": "drizzle-kit push",
+    "db:seed": "tsx scripts/seed.ts",
+    "create-user": "tsx scripts/create-user.ts"
+  },
+  "dependencies": {
+    "@node-rs/argon2": "^2.0.2",
+    "better-sqlite3": "^11.5.0",
+    "drizzle-orm": "^0.36.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-node": "^5.2.9",
+    "@sveltejs/kit": "^2.9.0",
+    "@sveltejs/vite-plugin-svelte": "^4.0.2",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^22.9.0",
+    "drizzle-kit": "^0.28.1",
+    "svelte": "^5.2.0",
+    "svelte-check": "^4.0.9",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11"
+  }
+}
