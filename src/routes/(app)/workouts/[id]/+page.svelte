@@ -1,6 +1,7 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import { invalidateAll } from '$app/navigation';
+  import { tick } from 'svelte';
   import Card from '$lib/components/Card.svelte';
   import Toast from '$lib/components/Toast.svelte';
   import { n1, n0, dateLong } from '$lib/components/format';
@@ -38,8 +39,9 @@
     rpe = suggestion.rpe;
   }
 
-  function onPick() {
+  async function onPick() {
     suggestion = null;
+    await tick();
     if (exerciseId) suggestForm?.requestSubmit();
   }
 
@@ -56,7 +58,7 @@
     if (r.kind === 'set') {
       const prs: PR[] = r.newPRs ?? [];
       if (prs.length) toast = '🏆 Neuer PR: ' + prs.map((p) => `${p.exerciseName} ${n1(p.value)} kg`).join(', ');
-      if (exerciseId) suggestForm?.requestSubmit();
+      if (exerciseId) tick().then(() => suggestForm?.requestSubmit());
     }
     if (r.kind === 'voice') toast = `${r.added} ${r.added === 1 ? 'Satz' : 'Sätze'} per Sprache hinzugefügt`;
   }

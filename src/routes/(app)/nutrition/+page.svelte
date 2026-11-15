@@ -9,6 +9,7 @@
   const d = $derived(data.day);
   const tp = $derived(data.target.grams ?? 160);
   const MEALS = ['Frühstück', 'Mittag', 'Abend', 'Snack'];
+  const mealDe: Record<string, string> = { breakfast: 'Frühstück', lunch: 'Mittag', dinner: 'Abend', snack: 'Snack' };
   const prev = $derived(shift(data.date, -1));
   const next = $derived(shift(data.date, 1));
   function shift(s: string, n: number) { const t = new Date(s + 'T12:00:00Z'); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); }
@@ -58,7 +59,7 @@
         <li class="flex items-center justify-between gap-2 py-2.5 text-sm">
           <div class="min-w-0">
             <div class="truncate font-extrabold">{e.name}</div>
-            <div class="text-xs text-muted">{e.meal ? e.meal + ' · ' : ''}{n0(e.kcal)} kcal · E {n0(e.protein)} · K {n0(e.carbs)} · F {n0(e.fat)}</div>
+            <div class="text-xs text-muted">{e.meal ? (mealDe[e.meal.toLowerCase()] ?? e.meal) + ' · ' : ''}{n0(e.kcal)} kcal · E {n0(e.protein)} · K {n0(e.carbs)} · F {n0(e.fat)}</div>
           </div>
           <form method="POST" action="?/delete" use:enhance><input type="hidden" name="id" value={e.id} /><button class="text-muted hover:text-danger" aria-label="Löschen">✕</button></form>
         </li>
